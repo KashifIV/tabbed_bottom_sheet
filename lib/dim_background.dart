@@ -12,7 +12,10 @@ class _DimBackground extends State<DimBackround> with SingleTickerProviderStateM
     super.initState(); 
     _controller = AnimationController(
       duration: const Duration(milliseconds: 500), vsync: this);
-    _alpha = IntTween(begin: 0, end: (255-(255*widget.percentDim).round())).animate(_controller)
+    _alpha = IntTween(begin: 0, end: (255-(255*widget.percentDim).round())).animate(
+      CurvedAnimation(
+        parent: _controller, 
+        curve: Curves.decelerate))
       ..addListener((){
         setState(() {
           
@@ -20,10 +23,12 @@ class _DimBackground extends State<DimBackround> with SingleTickerProviderStateM
       }); 
     _controller.forward(); 
   }
+
   void dispose(){
     super.dispose(); 
     _controller.dispose(); 
   }
+
   @override
   Widget build(BuildContext context){ 
     return Container(

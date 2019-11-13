@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:() =>  TabbedBottomSheet.open(context: context, child: Container(color: Colors.blue,)),
+        onPressed:() =>  TabbedBottomSheet.open(context: context, children: <Widget>[Container(width: 200, color: Colors.red,)], tabNames: ['Hello, World!']),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
