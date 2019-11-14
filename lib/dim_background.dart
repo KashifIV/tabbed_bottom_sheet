@@ -31,10 +31,17 @@ class _DimBackground extends State<DimBackround> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context){ 
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.black.withAlpha(_alpha.value),
-    );
+    return WillPopScope( 
+      onWillPop: (){
+        _controller.reverse(); 
+        return Future.delayed(Duration(milliseconds: 500), () => true); 
+      },
+      child: GestureDetector(
+        onTap: () => Navigator.maybePop(context),
+        child:  Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: Colors.black.withAlpha(_alpha.value),
+    )));
   }
 }

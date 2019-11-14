@@ -1,5 +1,7 @@
 library tabbed_bottom_sheet;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tabbed_bottom_sheet/dim_background.dart';
 import 'package:tabbed_bottom_sheet/sheet.dart';
@@ -58,11 +60,15 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope( 
+      onWillPop: (){
+        _animationController.reverse(); 
+        return Future.delayed(Duration(milliseconds: 500), () => true); 
+      },
+      child:Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
-        child: GestureDetector(
-          child:  Stack( children: <Widget>[
+          child: Stack( children: <Widget>[
             DimBackround(percentDim: 0.5,), 
             Positioned(
               left: 0,
