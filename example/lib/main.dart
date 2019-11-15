@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabbed_bottom_sheet/TabData.dart';
 import 'package:tabbed_bottom_sheet/tabbed_bottom_sheet.dart'; 
 
 void main() => runApp(MyApp());
@@ -53,7 +54,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               color: Colors.blueAccent,
-              onPressed:() =>  TabbedBottomSheet.open(context: context, children: <Widget>[Container(width: 200, color: Colors.red,)], tabNames: ['Hello, World!']),
+              onPressed:() =>  TabbedBottomSheet.open(
+                context: context, 
+                children: <Widget>[
+                  Container(width: 200, color: Colors.red,), 
+                  Container(width: 200, color: Colors.black,)
+                  ], 
+                tabsData: [
+                  TabData(
+                    text: Text(
+                      'Hello, World!', 
+                      style: TextStyle(
+                        color: Colors.white ,
+                      ),
+                    ), 
+                    icon: Icon(Icons.work, color: Colors.white,),
+                    backgroundColor: Colors.blueGrey
+                  ),
+                  TabData(
+                    text: Text(
+                      'Hello, Again!!', 
+                      style: TextStyle(
+                        color: Colors.white ,
+                      ),
+                    ), 
+                    icon: Icon(Icons.work, color: Colors.white,),
+                    backgroundColor: Colors.blueGrey
+                  ),
+                ]
+              )
             )
           ],
         ),

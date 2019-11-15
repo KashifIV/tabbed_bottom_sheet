@@ -8,7 +8,7 @@ class Sheet extends StatelessWidget{
     return Flexible(child: Container(
       color: Colors.white,
       height: 600,
-      width: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
       child: SingleChildScrollView(
         child: child, 
       )

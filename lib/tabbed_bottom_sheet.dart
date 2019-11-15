@@ -3,24 +3,26 @@ library tabbed_bottom_sheet;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tabbed_bottom_sheet/TabData.dart';
 import 'package:tabbed_bottom_sheet/dim_background.dart';
 import 'package:tabbed_bottom_sheet/sheet.dart';
 import 'package:tabbed_bottom_sheet/tabs.dart';
 
 
+
 class TabbedBottomSheet extends StatefulWidget {
   @required
   final List<Widget> children;
-  @required List<String> tabNames; 
+  @required List<TabData> tabData; 
   @required 
   final int initialTabNumber; 
-  TabbedBottomSheet({this.children, this.initialTabNumber, this.tabNames});
+  TabbedBottomSheet({this.children, this.initialTabNumber, this.tabData});
   _TabbedBottomSheet createState() => _TabbedBottomSheet(); 
 
   static open({
       @required BuildContext context,
       @required List<Widget> children, 
-      @required List<String> tabNames, 
+      @required List<TabData> tabsData, 
       int initalTabNumber = 0
     }) {
       Navigator.push(context, PageRouteBuilder(
@@ -28,7 +30,7 @@ class TabbedBottomSheet extends StatefulWidget {
           return TabbedBottomSheet(
             children: children,
             initialTabNumber: initalTabNumber,
-            tabNames: tabNames,
+            tabData: tabsData,
           ); 
         }
       , opaque: false)); 
@@ -37,6 +39,7 @@ class TabbedBottomSheet extends StatefulWidget {
 }
 class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProviderStateMixin{
   int _tabNumber; 
+  List<Tabs> tabs = []; 
   AnimationController _animationController; 
   Animation<double> animation; 
   void initState(){
@@ -52,14 +55,36 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
 
         }); 
       }); 
+
     _animationController.forward(); 
+  }
+  void createTabs(){
+    int counter = -1; 
+    if (tabs.length == 0) {
+      tabs = widget.tabData.map((item){
+        counter++; 
+        return Tabs(
+          index: counter,
+          numberOfTabs: widget.tabData.length,
+          onSelect: _onUpdateSheet,
+          tabData: item,
+        ); 
+      }).toList(); 
+    }
   }
   void dispose(){
     super.dispose(); 
     _animationController.dispose(); 
   }
+  void _onUpdateSheet(int index){
+    if (index >= widget.children.length && index >= 0){
+      return; 
+    }
+    _tabNumber = index; 
+  }
   @override
   Widget build(BuildContext context) {
+    createTabs();
     return WillPopScope( 
       onWillPop: (){
         _animationController.reverse(); 
@@ -71,18 +96,15 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
           child: Stack( children: <Widget>[
             DimBackround(percentDim: 0.5,), 
             Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
+              left: 0, right: 0, bottom: 0,
               height: animation.value,
               child: Column(
                 children: <Widget>[
-                  Tabs(text:widget.tabNames[_tabNumber]), 
+                  Row(children: <Widget>[]..addAll(tabs),), 
                   Sheet(child: widget.children[_tabNumber],)
                 ],
               )
-            )
-            
+            )           
           ]
         )
     ))); 

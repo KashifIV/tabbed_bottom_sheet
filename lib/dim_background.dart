@@ -33,7 +33,11 @@ class _DimBackground extends State<DimBackround> with SingleTickerProviderStateM
   Widget build(BuildContext context){ 
     return WillPopScope( 
       onWillPop: (){
-        _controller.reverse(); 
+        try {
+          _controller.reverse(); 
+        }on TickerCanceled{
+          print('Animation Cancelled'); 
+        }
         return Future.delayed(Duration(milliseconds: 500), () => true); 
       },
       child: GestureDetector(
