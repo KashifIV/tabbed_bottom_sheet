@@ -28,10 +28,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
 
@@ -57,8 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed:() =>  TabbedBottomSheet.open(
                 context: context, 
                 children: <Widget>[
-                  Container(width: 200, color: Colors.red,), 
-                  Container(width: 200, color: Colors.black,)
+                  ListView(
+                    children: <Widget>[]
+                    ..add(DefaultCard(color: Colors.red,))
+                    ..add(DefaultCard(color: Colors.blue,))
+                    ..add(DefaultCard(color: Colors.green,)),
+                  ),  
+                  Container(width: 200, color: Colors.green, child: Text("weee"),)
                   ], 
                 tabsData: [
                   TabData(
@@ -87,6 +89,19 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DefaultCard extends StatelessWidget{
+  final Color color; 
+  DefaultCard({this.color});
+
+  Widget build(BuildContext context) {
+    return Card(
+      color: this.color, 
+      elevation: 2.0,
+      child:  Text('Card Item'),
     );
   }
 }

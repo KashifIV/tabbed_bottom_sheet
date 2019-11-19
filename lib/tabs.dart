@@ -14,7 +14,7 @@ class Tabs extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onSelect(this.index),
+      onTap: () => onSelect(this.index),
      child: Container(
       width: MediaQuery.of(context).size.width/this.numberOfTabs,
       height: 40,

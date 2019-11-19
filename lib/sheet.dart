@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 
 class Sheet extends StatelessWidget{
   final Widget child; 
-  Sheet({this.child}); 
+  final double height; 
+  Sheet({this.child, this.height}); 
   @override
   Widget build(BuildContext context) {
-    return Flexible(child: Container(
-      color: Colors.white,
-      height: 600,
-      width: MediaQuery.of(context).size.width,
-      child: SingleChildScrollView(
-        child: child, 
-      )
+    return  ClipRect( child:Container(
+        color: Colors.white,
+        height: this.height,
+        width: MediaQuery.of(context).size.width,
+        child:  this.child,
     ));
   }
 }

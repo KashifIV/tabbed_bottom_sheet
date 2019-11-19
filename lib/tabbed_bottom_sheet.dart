@@ -8,22 +8,20 @@ import 'package:tabbed_bottom_sheet/dim_background.dart';
 import 'package:tabbed_bottom_sheet/sheet.dart';
 import 'package:tabbed_bottom_sheet/tabs.dart';
 
-
-
 class TabbedBottomSheet extends StatefulWidget {
-  @required
-  final List<Widget> children;
-  @required List<TabData> tabData; 
-  @required 
-  final int initialTabNumber; 
-  TabbedBottomSheet({this.children, this.initialTabNumber, this.tabData});
+  @required final List<Widget> children;
+  @required final List<TabData> tabData; 
+  @required final int initialTabNumber; 
+  final double height; 
+  TabbedBottomSheet({this.children, this.initialTabNumber, this.tabData, this.height});
   _TabbedBottomSheet createState() => _TabbedBottomSheet(); 
 
   static open({
       @required BuildContext context,
       @required List<Widget> children, 
       @required List<TabData> tabsData, 
-      int initalTabNumber = 0
+      int initalTabNumber = 0,
+      double height = 600
     }) {
       Navigator.push(context, PageRouteBuilder(
         pageBuilder: (_ , __, ___){
@@ -31,6 +29,7 @@ class TabbedBottomSheet extends StatefulWidget {
             children: children,
             initialTabNumber: initalTabNumber,
             tabData: tabsData,
+            height: height,
           ); 
         }
       , opaque: false)); 
@@ -80,7 +79,9 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
     if (index >= widget.children.length && index >= 0){
       return; 
     }
-    _tabNumber = index; 
+    setState(() {
+      _tabNumber = index; 
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -88,7 +89,7 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
     return WillPopScope( 
       onWillPop: (){
         _animationController.reverse(); 
-        return Future.delayed(Duration(milliseconds: 500), () => true); 
+        return Future.delayed(Duration(milliseconds: 400), () => true); 
       },
       child:Scaffold(
       backgroundColor: Colors.transparent,
@@ -98,15 +99,15 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
             Positioned(
               left: 0, right: 0, bottom: 0,
               height: animation.value,
-              child: Column(
+              child: ListView(
                 children: <Widget>[
                   Row(children: <Widget>[]..addAll(tabs),), 
-                  Sheet(child: widget.children[_tabNumber],)
+                  Sheet(child: widget.children[_tabNumber], height: widget.height,)
                 ],
               )
             )           
           ]
-        )
-    ))); 
+        ))
+    )); 
   }
 }
