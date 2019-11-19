@@ -101,7 +101,7 @@ class DefaultCard extends StatelessWidget{
     return Card(
       color: this.color, 
       elevation: 2.0,
-      child:  Text('Card Item'),
+      child: Container(height: 200, child: Center(child:Text('Card Item', style: TextStyle(color: Colors.white, fontSize: 20),))),
     );
   }
 }

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:tabbed_bottom_sheet/TabData.dart';
 
+
 class Tabs extends StatelessWidget{
-  
   @required final int index; 
   @required final int numberOfTabs; 
   @required final Function(int) onSelect; 
   final TabData tabData; 
-  Tabs({this.index, this.numberOfTabs, this.onSelect, this.tabData}); 
-  void onDeselect(){
-    
-  }
+  final bool selected; 
+  Tabs({this.index, this.numberOfTabs, this.onSelect, this.tabData, this.selected}); 
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onSelect(this.index),
+      onTap: () => onSelect(index), 
      child: Container(
       width: MediaQuery.of(context).size.width/this.numberOfTabs,
       height: 40,
@@ -22,15 +22,19 @@ class Tabs extends StatelessWidget{
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            tabData.graphic(), 
+            this.tabData.graphic(), 
             SizedBox(width: 20,), 
-            tabData.text, 
+            this.tabData.text, 
           ],
         ),
       ), 
       decoration: BoxDecoration(
-        color: tabData.backgroundColor, 
-        border: Border.all(color: Colors.grey)
+        color:(this.selected)? Colors.blue: this.tabData.backgroundColor, 
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(10), 
+          topRight: const Radius.circular(10), 
+        ),
+        border: (!this.selected) ? null :  Border.all(color: Colors.black)
       ),
     )); 
   } 

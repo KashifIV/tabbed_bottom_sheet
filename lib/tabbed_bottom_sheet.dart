@@ -67,6 +67,7 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
           numberOfTabs: widget.tabData.length,
           onSelect: _onUpdateSheet,
           tabData: item,
+          selected: false,
         ); 
       }).toList(); 
     }
@@ -75,13 +76,28 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
     super.dispose(); 
     _animationController.dispose(); 
   }
+  void _onUpdateTab(int index, bool selected){
+      setState(() {
+          tabs[index] = Tabs(
+            index: index,
+            tabData: tabs[index].tabData,
+            numberOfTabs: tabs[index].numberOfTabs,
+            onSelect: tabs[index].onSelect,
+            selected: selected,
+        ); 
+    });
+    
+  }
   void _onUpdateSheet(int index){
     if (index >= widget.children.length && index >= 0){
       return; 
-    }
+    } 
+    int _old = _tabNumber; 
     setState(() {
       _tabNumber = index; 
     });
+    _onUpdateTab(_tabNumber, true); 
+    _onUpdateTab(_old, false);
   }
   @override
   Widget build(BuildContext context) {
