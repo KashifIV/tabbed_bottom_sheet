@@ -48,4 +48,5 @@ class _DimBackground extends State<DimBackround> with SingleTickerProviderStateM
           color: Colors.black.withAlpha(_alpha.value),
     )));
   }
+  
 }

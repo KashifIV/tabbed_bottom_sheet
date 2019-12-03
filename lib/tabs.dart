@@ -28,14 +28,14 @@ class Tabs extends StatelessWidget{
           ],
         ),
       ), 
-      decoration: BoxDecoration(
-        color:(this.selected)? Colors.blue: this.tabData.backgroundColor, 
+      decoration: (tabData.decoration == null) ? BoxDecoration(
+        color:(this.selected)? this.tabData.activeColor: this.tabData.backgroundColor, 
         borderRadius: BorderRadius.only(
           topLeft: const Radius.circular(10), 
           topRight: const Radius.circular(10), 
         ),
         border: (!this.selected) ? null :  Border.all(color: Colors.black)
-      ),
+      ): tabData.decoration.copyWith(color: (!this.selected) ? null: tabData.activeColor),
     )); 
   } 
 }

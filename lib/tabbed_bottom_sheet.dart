@@ -67,7 +67,7 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
           numberOfTabs: widget.tabData.length,
           onSelect: _onUpdateSheet,
           tabData: item,
-          selected: false,
+          selected: (counter == 0),
         ); 
       }).toList(); 
     }
@@ -116,6 +116,7 @@ class _TabbedBottomSheet extends State<TabbedBottomSheet> with SingleTickerProvi
               left: 0, right: 0, bottom: 0,
               height: animation.value,
               child: ListView(
+                physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   Row(children: <Widget>[]..addAll(tabs),), 
                   Sheet(child: widget.children[_tabNumber], height: widget.height,)

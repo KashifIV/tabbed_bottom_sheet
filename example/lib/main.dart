@@ -71,7 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ), 
                     icon: Icon(Icons.work, color: Colors.white,),
-                    backgroundColor: Colors.blueGrey
+                    backgroundColor: Colors.blueGrey,
+                    activeColor: Colors.blue,
                   ),
                   TabData(
                     text: Text(
@@ -81,7 +82,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ), 
                     icon: Icon(Icons.work, color: Colors.white,),
-                    backgroundColor: Colors.blueGrey
+                    activeColor: Colors.pink,
+                    decoration: BoxDecoration(
+                      color: Colors.pink[50], 
+                      borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(20), 
+                        topRight: const Radius.circular(20), 
+                      )
+                    )
                   ),
                 ]
               )
